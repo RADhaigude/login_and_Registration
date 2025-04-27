@@ -4,46 +4,51 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
 
 public class TC_LoginFunctionality {
 
-    public static void main(String[] args) throws InterruptedException {
-        // Initialize the ChromeDriver
+	@Test
+	
+    public static void login() throws InterruptedException {
+        System.out.println("Initializing ChromeDriver...");
         WebDriver driver = new ChromeDriver();
-        driver.get("https://mahendra.vyaparerp.com/login"); // Open login page
 
-        // Maximize the browser window
+        System.out.println("Opening login page...");
+        driver.get("https://sunilsharma30.vasyerp.com/login");
+
+        System.out.println("Maximizing the browser window...");
         driver.manage().window().maximize();
 
-        // Wait for elements to load
         Thread.sleep(2000);
+        System.out.println("Waiting for elements to load...");
 
-        // Locate username and password fields
+        System.out.println("Locating username and password fields...");
         WebElement usernameField = driver.findElement(By.id("userName"));
         WebElement passwordField = driver.findElement(By.id("password"));
 
-        // Enter login credentials
-        usernameField.sendKeys("mahendra.vasyerp@gmail.com");
-        passwordField.sendKeys("123456789");
+        System.out.println("Entering login credentials...");
+        usernameField.sendKeys("sunilsharma@vasyerp.com");
+        passwordField.sendKeys("Sunil@1234");
 
-        // Click on the login button
+        System.out.println("Clicking on the login button...");
         WebElement loginButton = driver.findElement(By.id("signin_submit"));
         loginButton.click();
 
-        // Wait for login to complete
-        Thread.sleep(3000); // Wait for redirection to dashboard
+        Thread.sleep(3000);
+        System.out.println("Waiting for redirection after login...");
 
-        // Validate URL after login
         String expectedUrl = "https://mahendra.vyaparerp.com/dashboard";
         String actualUrl = driver.getCurrentUrl();
 
+        System.out.println("Validating the dashboard URL...");
         if (actualUrl.equals(expectedUrl)) {
-            System.out.println("Login successful. Navigated to Dashboard.");
+            System.out.println("✅ Login successful. Navigated to Dashboard.");
         } else {
-            System.out.println("Login failed or wrong navigation. Current URL: " + actualUrl);
+            System.out.println("❌ Login failed or wrong navigation. Current URL: " + actualUrl);
         }
 
-        // Close the browser
+        System.out.println("Closing the browser...");
         driver.quit();
     }
 }
