@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-04-27T21:44:08 IST" name="Suite" finished-at="2025-04-27T21:44:20 IST" duration-ms="12092">
+  <suite started-at="2025-04-28T19:20:49 IST" name="Suite" finished-at="2025-04-28T19:21:04 IST" duration-ms="15399">
     <groups>
     </groups>
-    <test started-at="2025-04-27T21:44:08 IST" name="Test" finished-at="2025-04-27T21:44:20 IST" duration-ms="12092">
+    <test started-at="2025-04-28T19:20:49 IST" name="Test" finished-at="2025-04-28T19:21:04 IST" duration-ms="15399">
       <class name="Mahendra.Mahendra.TC_LoginFunctionality">
-        <test-method signature="login()[pri:0, instance:Mahendra.Mahendra.TC_LoginFunctionality@5d7148e2]" started-at="2025-04-27T21:44:08 IST" name="login" finished-at="2025-04-27T21:44:20 IST" duration-ms="12043" status="PASS">
+        <test-method signature="login()[pri:0, instance:Mahendra.Mahendra.TC_LoginFunctionality@6a400542]" started-at="2025-04-28T19:20:49 IST" name="login" finished-at="2025-04-28T19:21:04 IST" duration-ms="15352" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->

@@ -38,7 +38,7 @@ public class TC_LoginFunctionality {
         Thread.sleep(3000);
         System.out.println("Waiting for redirection after login...");
 
-        String expectedUrl = "https://mahendra.vyaparerp.com/dashboard";
+        String expectedUrl = "https://sunilsharma30.vasyerp.com/dashboard";
         String actualUrl = driver.getCurrentUrl();
 
         System.out.println("Validating the dashboard URL...");
