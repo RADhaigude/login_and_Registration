@@ -5,11 +5,11 @@ pr:
       - dev
 
 pool:
-  name: 'Default'
+  vmImage: 'ubuntu-latest'  # Use Microsoft-hosted agent
 
 variables:
   SONAR_PROJECT_KEY: "TravelYaari"
-  SONAR_ORG: "rutujadhaigude2000"
+  SONAR_ORG: "radhaigude"
 
 stages:
   - stage: BuildAndScan
@@ -18,39 +18,45 @@ stages:
       - job: ScanJob
         displayName: "Scan Job"
         steps:
-          # Step 1: Checkout the code
+          # Checkout code
           - checkout: self
 
-          # Step 2: Install Node.js
+          # Install Node.js
           - task: NodeTool@0
             inputs:
               versionSpec: '18.x'
             displayName: 'Install Node.js'
 
-          # Step 3: Install dependencies
+          # Install dependencies
           - script: npm install
             displayName: 'Install Dependencies'
 
-          # Step 4: Prepare SonarCloud analysis
+          # Prepare SonarCloud Analysis
           - task: SonarCloudPrepare@1
             inputs:
-              SonarCloud: 'SonarQube-Service-Connection1'
+              SonarCloud: 'SonarQube-Service-Connection1'  # Service connection name
               organization: $(SONAR_ORG)
-              projectKey: $(SONAR_PROJECT_KEY)
-              projectName: $(SONAR_PROJECT_KEY)
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: $(SONAR_PROJECT_KEY)
+              cliProjectName: $(SONAR_PROJECT_KEY)
+              extraProperties: |
+                sonar.sources=.
+                sonar.tests=.
+                sonar.test.inclusions=**/*.spec.js,**/*.test.js
+                sonar.javascript.lcov.reportPaths=coverage/lcov.info
             displayName: 'Prepare SonarCloud Analysis'
 
-          # Step 5: Build project
+          # Build the project
           - script: npm run build
             displayName: 'Build Project'
 
-          # Step 6: Analyze with SonarCloud
+          # Run SonarCloud Analysis
           - task: SonarCloudAnalyze@1
             displayName: 'Run SonarCloud Analysis'
 
-          # Step 7: Publish & enforce quality gate
+          # Publish & enforce quality gate
           - task: SonarCloudPublish@1
             inputs:
               pollingTimeoutSec: '300'
-              failOnQualityGate: true   # ✅ critical: fails build if quality gate fails
             displayName: 'Publish & Enforce Quality Gate'
