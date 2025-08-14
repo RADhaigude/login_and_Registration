@@ -1,0 +1,56 @@
+pr:
+  branches:
+    include:
+      - qa
+      - dev
+
+pool:
+  name: 'Default'
+
+variables:
+  SONAR_PROJECT_KEY: "TravelYaari"
+  SONAR_ORG: "rutujadhaigude2000"
+
+stages:
+  - stage: BuildAndScan
+    displayName: "Build & SonarCloud Scan"
+    jobs:
+      - job: ScanJob
+        displayName: "Scan Job"
+        steps:
+          # Step 1: Checkout the code
+          - checkout: self
+
+          # Step 2: Install Node.js
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '18.x'
+            displayName: 'Install Node.js'
+
+          # Step 3: Install dependencies
+          - script: npm install
+            displayName: 'Install Dependencies'
+
+          # Step 4: Prepare SonarCloud analysis
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: 'SonarQube-Service-Connection1'
+              organization: $(SONAR_ORG)
+              projectKey: $(SONAR_PROJECT_KEY)
+              projectName: $(SONAR_PROJECT_KEY)
+            displayName: 'Prepare SonarCloud Analysis'
+
+          # Step 5: Build project
+          - script: npm run build
+            displayName: 'Build Project'
+
+          # Step 6: Analyze with SonarCloud
+          - task: SonarCloudAnalyze@1
+            displayName: 'Run SonarCloud Analysis'
+
+          # Step 7: Publish & enforce quality gate
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
+              failOnQualityGate: true   # ✅ critical: fails build if quality gate fails
+            displayName: 'Publish & Enforce Quality Gate'
